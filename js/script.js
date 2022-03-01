@@ -4,16 +4,24 @@ const searchPhone = () => {
   // console.log(searchText);
 
   searchField.value = '';
-
-  const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
+  if(searchText == ''){
+    alert('Please write someting to display');
+  }
+  else{
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
   fetch(url)
     .then((res) => res.json())
     .then((data) => displaySearchResult(data.data));
+  }
 };
 
 const displaySearchResult = (phones) => {
   const searchResult = document.getElementById('search-result');
   // console.log(phones);
+  searchResult.textContent = ''; // clear previous result
+  if( phones.length == 0 ){
+    alert('No Result Found!!!');
+  };
   for (const phone of phones.slice(0,20)) {
     // console.log(phone);
     const div = document.createElement('div');
@@ -42,6 +50,12 @@ const loadPhoneDetail = (phoneId) => {
 const displayPhoneDetail = phone => {
   console.log(phone);
   const phoneDetails = document.getElementById('phone-details');
+  phoneDetails.textContent = ''; // clear previous result
+
+  if(phone.releaseDate == ''){
+    phone.releaseDate = "No release date found!!! 😢";
+    console.log('not found');
+  };
 
   const div = document.createElement('div');
   div.classList.add('row', 'mb-4');
@@ -51,7 +65,7 @@ const displayPhoneDetail = phone => {
     </div>
     <div class="col-md-5 border py-5 pe-5">
       <div class="phone-details-div">
-        <h3 class="fw-bold mb-3">Apple</h3>
+        <h3 class="fw-bold mb-3">${phone.brand}</h3>
         <h6 class="fw-bold">Release Date: <span class="h6">${phone.releaseDate}</span></h6>
         <h6 class="fw-bold">Sensors: <span class="h6">${phone.sensors}</span></h5>
         <h6 class="fw-bold">Others: <span class="h6">${phone.others}</span> </h6>
@@ -60,3 +74,4 @@ const displayPhoneDetail = phone => {
   `
   phoneDetails.appendChild(div);
 };
+ 
