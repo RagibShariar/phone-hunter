@@ -47,13 +47,9 @@ const loadPhoneDetail = (phoneId) => {
   .then(data => displayPhoneDetail(data.data));
 };
 const displayPhoneDetail = phone => {
-  console.log(phone);
+  // console.log(phone);
   const phoneDetails = document.getElementById('phone-details');
   phoneDetails.textContent = ''; // clear previous result
-
-  if(phone.releaseDate == ''){
-    phone.releaseDate = "No release date found!!! 😢";
-  };
 
   const div = document.createElement('div');
   div.classList.add('row', 'mb-4');
@@ -65,11 +61,11 @@ const displayPhoneDetail = phone => {
       <div class="phone-details-div">
       <h3 class="fw-bold mb-3">${phone.brand}</h3>
       <h6 class="fw-bold">Model: <span class="h6">${phone.name}</span></h6>
-      <h6 class="fw-bold">Release Date: <span class="h6">${phone.releaseDate}</span></h6>
+      <h6 class="fw-bold">Release Date: <span class="h6">${phone?.releaseDate || 'No release date found!!! 😢'}</span></h6>
         <h6 class="fw-bold">Processor: <span class="h6">${phone.mainFeatures.chipSet}</span></h5>
         <h6 class="fw-bold">Display Size: <span class="h6">${phone.mainFeatures.displaySize}</span></h5>
         <h6 class="fw-bold">Storage: <span class="h6">${phone.mainFeatures.memory}</span></h5>
-        <h6 class="fw-bold">Sensors: <span class="h6">${phone.mainFeatures?.sensors}</span></h5>
+        <h6 class="fw-bold">Sensors: <span class="h6">${phone.mainFeatures?.sensors.join(', ')}</span></h5>
         <h6 class="fw-bold">Bluetooth: <span class="h6">${phone?.others?.Bluetooth || 'No information about Bluetooth 😢'}</span> </h6>
         <h6 class="fw-bold">GPS: <span class="h6">${phone.others?.GPS || 'No information about GPS 😢'}</span> </h6>
         <h6 class="fw-bold">NFC: <span class="h6">${phone.others?.NFC || 'No information about NFC 😢'}</span> </h6>
